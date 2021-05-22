@@ -1,0 +1,61 @@
+import React from 'react';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    Redirect,
+    useHistory,
+    useLocation
+  } from "react-router-dom";
+
+import Home from '../Home/Home';
+import LoginPage from '../Auth/Login';
+import BookDetail from '../BookDetail/BookDetail';
+import AddBook from '../Form/Form';
+import BookList from '../BookList/BookList';
+import { useAuth } from '../AuthContext/use-auth';
+
+const Navbar = (props) => {
+    const auth = useAuth()
+    return(
+        
+        <>
+          
+            { auth.user ?
+            (
+              <Router>
+            <Switch>
+            <Route path='/bookDetail'>
+                <BookDetail />
+            </Route>
+            <Route path='/addBook'>
+                <AddBook />
+            </Route>
+            <Route path='/bookList'>
+                <BookList />
+            </Route>
+            
+            <Route path="/">
+              <Home />
+            </Route>
+            </Switch>
+            </Router>
+            ) :
+
+            (
+            <>
+            <Router>
+            <Route path="/">
+              <LoginPage />
+            </Route>
+            </Router>
+            </>
+            )
+            }
+          </>
+            
+    );
+}
+
+export default Navbar;
